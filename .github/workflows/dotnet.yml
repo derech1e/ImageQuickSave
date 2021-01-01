@@ -1,0 +1,37 @@
+  
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  remove-old-artifacts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - name: Remove old artifacts
+      uses: c-hive/gha-remove-artifacts@v1
+      with:
+        age: '4 day'
+        skip-recent: 1
+
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Setup MSBuild Path
+      uses: warrenbuckley/Setup-MSBuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      
+    - name: Build 
+      run: msbuild ImageQuickSave.sln /p:Configuration=Release /p:DeployOnBuild=true
+      
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: ImageQuickSave
+        path: ImageQuickSave\bin\Release\

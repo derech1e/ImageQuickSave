@@ -1,7 +1,0 @@
-P:\ImageQuickSave\bin\Debug\ImageQuickSave.exe.config
-P:\ImageQuickSave\bin\Debug\ImageQuickSave.exe
-P:\ImageQuickSave\bin\Debug\ImageQuickSave.pdb
-P:\ImageQuickSave\obj\Debug\ImageQuickSave.csprojAssemblyReference.cache
-P:\ImageQuickSave\obj\Debug\ImageQuickSave.csproj.CoreCompileInputs.cache
-P:\ImageQuickSave\obj\Debug\ImageQuickSave.exe
-P:\ImageQuickSave\obj\Debug\ImageQuickSave.pdb

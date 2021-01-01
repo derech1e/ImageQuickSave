@@ -1,22 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace ImageQuickSave
 {
-    static class Program
+    class Program
     {
-        /// <summary>
-        /// Der Haupteinstiegspunkt für die Anwendung.
-        /// </summary>
-        [STAThread]
-        static void Main()
+        private const String saveFileDialogFilter = "Portable Network Graphics (*.png)|*.png|JPEG-Image (*.jpg)|*.jpg|TIFF Image (*.tiff)|*.tiff";
+        private static readonly ImageFormat[] imageFormats = { ImageFormat.Png, ImageFormat.Jpeg, ImageFormat.Tiff };
+
+        [STAThreadAttribute]
+        static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            if (Clipboard.ContainsImage())
+            {
+                var image = Clipboard.GetImage();
+                var saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = saveFileDialogFilter;
+                saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ImageFormat format = imageFormats[saveFileDialog.FilterIndex - 1];
+                    image.Save(saveFileDialog.FileName, format);
+                }
+            }
         }
     }
 }
